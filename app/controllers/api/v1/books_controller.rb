@@ -1,27 +1,30 @@
 module Api
   module V1
     class BooksController < ApiController
-      before_action :set_book, only: [:show, :update, :destroy]
+      before_action :set_book, only: [ :show, :update, :destroy ]
 
       # GET /api/v1/books
       def index
-        @books = Book.all
+        authorize Book
+        @books = policy_scope(Book)
 
-        @books = @books.where('title LIKE ?', "%#{params[:title]}%") if params[:title].present?
-        @books = @books.where('author LIKE ?', "%#{params[:author]}%") if params[:author].present?
-        @books = @books.where('genre LIKE ?', "%#{params[:genre]}%") if params[:genre].present?
+        @books = @books.where("title LIKE ?", "%#{params[:title]}%") if params[:title].present?
+        @books = @books.where("author LIKE ?", "%#{params[:author]}%") if params[:author].present?
+        @books = @books.where("genre LIKE ?", "%#{params[:genre]}%") if params[:genre].present?
 
         render json: @books
       end
 
       # GET /api/v1/books/1
       def show
+        authorize @book
         render json: @book
       end
 
       # POST /api/v1/books
       def create
         @book = Book.new(book_params)
+        authorize @book
 
         if @book.save
           render json: @book, status: :created, location: api_v1_book_url(@book)
@@ -32,6 +35,7 @@ module Api
 
       # PATCH/PUT /api/v1/books/1
       def update
+        authorize @book
         if @book.update(book_params)
           render json: @book
         else
@@ -41,6 +45,7 @@ module Api
 
       # DELETE /api/v1/books/1
       def destroy
+        authorize @book
         @book.destroy
         head :no_content
       end
@@ -50,7 +55,7 @@ module Api
       def set_book
         @book = Book.find(params[:id])
       rescue ActiveRecord::RecordNotFound
-        render json: { error: 'Book not found' }, status: :not_found
+        render json: { error: "Book not found" }, status: :not_found
       end
 
       def book_params
