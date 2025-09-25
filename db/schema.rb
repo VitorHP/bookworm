@@ -10,7 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_24_224821) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_25_171943) do
+  create_table "books", force: :cascade do |t|
+    t.string "title", null: false
+    t.string "author", null: false
+    t.string "genre", null: false
+    t.string "isbn", null: false
+    t.integer "total_copies", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author"], name: "index_books_on_author"
+    t.index ["isbn"], name: "index_books_on_isbn", unique: true
+    t.index ["title"], name: "index_books_on_title"
+  end
+
   create_table "librarians", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -23,6 +36,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_24_224821) do
     t.string "current_sign_in_ip"
     t.string "last_sign_in_ip"
     t.string "name"
+    t.string "staff_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_librarians_on_email", unique: true
