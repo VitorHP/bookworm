@@ -22,9 +22,55 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <main class="container mx-auto mt-28 px-5 flex">
-      <%= yield %>
-    </main>
+  <body class="min-h-screen bg-gray-50">
+    <header class="bg-white shadow-sm">
+      <nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="flex h-16 justify-between">
+          <div class="flex">
+            <div class="flex flex-shrink-0 items-center">
+              <h1 class="text-2xl font-bold text-indigo-600">Bookworm</h1>
+            </div>
+          </div>
+          <div class="flex items-center gap-4">
+            <% if member_signed_in? %>
+              <span class="text-gray-500">Member: <%= current_member.name %></span>
+              <%= button_to 'Sign out', destroy_member_session_path, method: :delete, class: "rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" %>
+            <% elsif librarian_signed_in? %>
+              <span class="text-gray-500">Librarian: <%= current_librarian.name %></span>
+              <%= button_to 'Sign out', destroy_librarian_session_path, method: :delete, class: "rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" %>
+            <% else %>
+              <%= link_to 'Member Sign In', new_member_session_path, class: "text-gray-500 hover:text-gray-700" %>
+              <%= link_to 'Librarian Sign In', new_librarian_session_path, class: "rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" %>
+            <% end %>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
+      <% if notice %>
+        <div class="rounded-md bg-green-50 p-4 mb-4">
+          <div class="flex">
+            <div class="ml-3">
+              <p class="text-sm font-medium text-green-800"><%= notice %></p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+      
+      <% if alert %>
+        <div class="rounded-md bg-red-50 p-4 mb-4">
+          <div class="flex">
+            <div class="ml-3">
+              <p class="text-sm font-medium text-red-800"><%= alert %></p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      <main>
+        <%= yield %>
+      </main>
+    </div>
   </body>
 </html>
