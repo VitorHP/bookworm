@@ -1,16 +1,10 @@
 import React from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { borrowingsApi } from '@/utils/api';
+import { useLibrarianDashboard } from '@/contexts/LibrarianDashboardContext';
 import { BorrowingCard } from './BorrowingCard';
 import type { BorrowingStatus } from '@/types/api';
 
 const LibrarianDashboard: React.FC = () => {
-  const [selectedStatus, setSelectedStatus] = React.useState<BorrowingStatus[]>([]);
-
-  const { data: borrowings, isLoading, error } = useQuery(
-    ['borrowings', selectedStatus],
-    () => borrowingsApi.search({ status: selectedStatus })
-  );
+  const { borrowings, selectedStatuses, isLoading, error, toggleStatus } = useLibrarianDashboard();
 
   if (isLoading) {
     return (
@@ -41,16 +35,10 @@ const LibrarianDashboard: React.FC = () => {
           {statusOptions.map((status) => (
             <button
               key={status}
-              onClick={() => {
-                setSelectedStatus((prev) =>
-                  prev.includes(status)
-                    ? prev.filter((s) => s !== status)
-                    : [...prev, status]
-                );
-              }}
+              onClick={() => toggleStatus(status)}
               className={`inline-flex items-center px-3 py-1.5 rounded-md text-sm font-medium capitalize
                 ${
-                  selectedStatus.includes(status)
+                  selectedStatuses.includes(status)
                     ? 'bg-indigo-100 text-indigo-700'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
@@ -62,15 +50,15 @@ const LibrarianDashboard: React.FC = () => {
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {borrowings?.data.map((borrowing) => (
+        {borrowings.map((borrowing) => (
           <BorrowingCard key={borrowing.id} borrowing={borrowing} />
         ))}
       </div>
 
-      {(!borrowings?.data || borrowings.data.length === 0) && (
+      {(!borrowings.length) && (
         <div className="text-center py-12 bg-white rounded-lg shadow-sm">
           <p className="text-gray-500">No borrowings found.</p>
-          {selectedStatus.length > 0 && (
+          {selectedStatuses.length > 0 && (
             <p className="text-sm text-gray-400 mt-2">
               Try changing the status filters above.
             </p>

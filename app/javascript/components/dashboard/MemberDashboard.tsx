@@ -1,13 +1,9 @@
 import React from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { borrowingsApi } from '@/utils/api';
+import { useMemberDashboard } from '@/contexts/MemberDashboardContext';
 import { BorrowingCard } from './BorrowingCard';
 
 const MemberDashboard: React.FC = () => {
-  const { data: borrowings, isLoading, error } = useQuery(
-    ['borrowings'],
-    () => borrowingsApi.search({ status: [] })
-  );
+  const { borrowings, isLoading, error } = useMemberDashboard();
 
   if (isLoading) {
     return (
@@ -27,7 +23,7 @@ const MemberDashboard: React.FC = () => {
     );
   }
 
-  if (!borrowings?.data.length) {
+  if (!borrowings.length) {
     return (
       <div className="text-center">
         <h2 className="text-xl font-semibold mb-4">My Borrowings</h2>
@@ -46,7 +42,7 @@ const MemberDashboard: React.FC = () => {
     <div className="space-y-6">
       <h2 className="text-xl font-semibold mb-6">My Borrowings</h2>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {borrowings.data.map((borrowing) => (
+        {borrowings.map((borrowing) => (
           <BorrowingCard key={borrowing.id} borrowing={borrowing} />
         ))}
       </div>

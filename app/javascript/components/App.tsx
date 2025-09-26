@@ -1,6 +1,8 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from '@/contexts/AuthContext';
+import { MemberDashboardProvider } from '@/contexts/MemberDashboardContext';
+import { LibrarianDashboardProvider } from '@/contexts/LibrarianDashboardContext';
 import ProtectedRoute from '@/components/auth/ProtectedRoute';
 import Layout from '@/components/navigation/Layout';
 import Login from '@/components/auth/Login';
@@ -25,7 +27,7 @@ const App: React.FC = () => {
           {/* Public Routes */}
           <Route path="/login" element={<Login />} />
           <Route path="/unauthorized" element={<UnauthorizedPage />} />
-          
+
           {/* Redirect root to login */}
           <Route path="/" element={<Navigate to="/login" replace />} />
 
@@ -35,7 +37,14 @@ const App: React.FC = () => {
             element={
               <ProtectedRoute requiredRole="member">
                 <Routes>
-                  <Route path="dashboard" element={<MemberDashboard />} />
+                  <Route
+                    path="dashboard"
+                    element={
+                      <MemberDashboardProvider>
+                        <MemberDashboard />
+                      </MemberDashboardProvider>
+                    }
+                  />
                 </Routes>
               </ProtectedRoute>
             }
@@ -47,7 +56,14 @@ const App: React.FC = () => {
             element={
               <ProtectedRoute requiredRole="librarian">
                 <Routes>
-                  <Route path="dashboard" element={<LibrarianDashboard />} />
+                  <Route
+                    path="dashboard"
+                    element={
+                      <LibrarianDashboardProvider>
+                        <LibrarianDashboard />
+                      </LibrarianDashboardProvider>
+                    }
+                  />
                 </Routes>
               </ProtectedRoute>
             }
