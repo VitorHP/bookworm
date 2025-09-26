@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_26_024416) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_26_113238) do
   create_table "books", force: :cascade do |t|
     t.string "title", null: false
     t.string "author", null: false
@@ -37,6 +37,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_26_024416) do
     t.index ["librarian_id"], name: "index_borrowings_on_librarian_id"
     t.index ["member_id", "returned_at"], name: "index_borrowings_on_member_id_and_returned_at"
     t.index ["member_id"], name: "index_borrowings_on_member_id"
+  end
+
+  create_table "jwt_denylists", force: :cascade do |t|
+    t.string "jti"
+    t.datetime "exp"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["jti"], name: "index_jwt_denylists_on_jti"
   end
 
   create_table "librarians", force: :cascade do |t|

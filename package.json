@@ -1,0 +1,26 @@
+{
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@tanstack/react-query": "^4.29.7",
+    "@types/node": "^20.2.5",
+    "@types/react": "^18.2.8",
+    "@types/react-dom": "^18.2.4",
+    "@types/react-router-dom": "^5.3.3",
+    "axios": "^1.4.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.11.2",
+    "typescript": "^5.1.3"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^5.0.3",
+    "vite": "^5.4.20",
+    "vite-plugin-ruby": "^5.1.1"
+  },
+  "packageManager": "yarn@4.10.3",
+  "scripts": {
+    "build": "vite build",
+    "check-types": "tsc --noEmit"
+  }
+}

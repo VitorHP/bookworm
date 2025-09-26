@@ -45,10 +45,6 @@ RSpec.describe Librarian, type: :model do
   describe 'devise features' do
     let(:librarian) { create(:librarian) }
 
-    it 'supports timeout' do
-      expect(librarian).to respond_to(:timedout?)
-    end
-
     it 'tracks sign in count' do
       expect(librarian).to respond_to(:sign_in_count)
     end

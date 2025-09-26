@@ -1,0 +1,56 @@
+import React from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from '@/contexts/AuthContext';
+import ProtectedRoute from '@/components/auth/ProtectedRoute';
+import Login from '@/components/auth/Login';
+import BooksSearch from './books/BooksSearch';
+
+const UnauthorizedPage = () => (
+  <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="max-w-md w-full space-y-8 text-center">
+      <h1 className="text-4xl font-bold text-gray-900">Unauthorized</h1>
+      <p className="text-gray-600">You don't have permission to access this page.</p>
+    </div>
+  </div>
+);
+
+const App: React.FC = () => {
+  return (
+    <AuthProvider>
+      <Routes>
+        {/* Public Routes */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/unauthorized" element={<UnauthorizedPage />} />
+        
+        {/* Redirect root to login */}
+        <Route path="/" element={<Navigate to="/login" replace />} />
+
+        {/* Protected Member Routes */}
+        <Route
+          path="/member/*"
+          element={
+            <ProtectedRoute requiredRole="member">
+              <Routes>
+                <Route path="dashboard" element={<div>Member Dashboard</div>} />
+              </Routes>
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Protected Librarian Routes */}
+        <Route
+          path="/librarian/*"
+          element={
+            <ProtectedRoute requiredRole="librarian">
+              <Routes>
+                <Route path="dashboard" element={<div>Librarian Dashboard</div>} />
+              </Routes>
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+    </AuthProvider>
+  );
+};
+
+export default App;

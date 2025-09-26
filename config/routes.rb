@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
-  devise_for :librarians
-  devise_for :members
+  # API routes for authentication
+  devise_for :librarians, path: "api/v1/librarians", controllers: {
+    sessions: "api/v1/librarians_sessions"
+  }, defaults: { format: :json }
+
+  devise_for :members, path: "api/v1/members", controllers: {
+    sessions: "api/v1/members_sessions"
+  }, defaults: { format: :json }
 
   # API routes
   namespace :api do
@@ -25,5 +31,9 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   # Defines the root path route ("/")
-  # root "posts#index"
+  root "dashboards#index"
+
+  get '*path', to: 'dashboards#index', constraints: ->(request) do
+    !request.xhr? && request.format.html?
+  end
 end

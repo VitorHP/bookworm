@@ -1,8 +1,7 @@
 class ApiController < ActionController::Base
   include Pundit::Authorization
 
-  # Disable CSRF protection for API endpoints
-  skip_before_action :verify_authenticity_token
+  protect_from_forgery with: :null_session
 
   # Force authorization check
   after_action :verify_authorized, except: :index
