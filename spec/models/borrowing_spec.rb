@@ -29,6 +29,25 @@ RSpec.describe Borrowing, type: :model do
         expect(Borrowing.overdue).not_to include(active_borrowing, returned_borrowing)
       end
     end
+
+    describe '.returned' do
+      it 'returns only returned borrowings' do
+        expect(Borrowing.returned).to include(returned_borrowing)
+        expect(Borrowing.returned).not_to include(active_borrowing, overdue_borrowing)
+      end
+    end
+
+    describe '.due_today' do
+      let!(:due_today_morning) { create(:borrowing, due_date: Time.current.beginning_of_day) }
+      let!(:due_today_evening) { create(:borrowing, due_date: Time.current.end_of_day) }
+      let!(:due_tomorrow) { create(:borrowing, due_date: 1.day.from_now) }
+      let!(:due_today_returned) { create(:borrowing, :returned, due_date: Time.current) }
+
+      it 'returns only borrowings due today that have not been returned' do
+        expect(Borrowing.due_today).to include(due_today_morning, due_today_evening)
+        expect(Borrowing.due_today).not_to include(due_tomorrow, due_today_returned)
+      end
+    end
   end
 
   describe 'instance methods' do

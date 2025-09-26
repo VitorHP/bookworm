@@ -1,6 +1,6 @@
 export type UserRole = 'member' | 'librarian';
 
-export type BorrowingStatus = 'active' | 'overdue' | 'returned';
+export type BorrowingStatus = 'active' | 'overdue' | 'returned' | 'due_today';
 
 export interface User {
   id: number;

@@ -6,6 +6,7 @@ import Layout from '@/components/navigation/Layout';
 import Login from '@/components/auth/Login';
 import BooksSearch from './books/BooksSearch';
 import MemberDashboard from './dashboard/MemberDashboard';
+import LibrarianDashboard from './dashboard/LibrarianDashboard';
 
 const UnauthorizedPage = () => (
   <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -46,7 +47,7 @@ const App: React.FC = () => {
             element={
               <ProtectedRoute requiredRole="librarian">
                 <Routes>
-                  <Route path="dashboard" element={<div>Librarian Dashboard</div>} />
+                  <Route path="dashboard" element={<LibrarianDashboard />} />
                 </Routes>
               </ProtectedRoute>
             }

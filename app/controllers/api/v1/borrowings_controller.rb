@@ -9,6 +9,8 @@ module Api
 
         borrowings = borrowings.overdue if (params[:status] || []).include?("overdue")
         borrowings = borrowings.active if (params[:status] || []).include?("active")
+        borrowings = borrowings.returned if (params[:status] || []).include?("returned")
+        borrowings = borrowings.due_today if (params[:status] || []).include?("due_today")
 
         render json: borrowings, include: [ :book ]
       end
