@@ -5,6 +5,7 @@ import ProtectedRoute from '@/components/auth/ProtectedRoute';
 import Layout from '@/components/navigation/Layout';
 import Login from '@/components/auth/Login';
 import BooksSearch from './books/BooksSearch';
+import MemberDashboard from './dashboard/MemberDashboard';
 
 const UnauthorizedPage = () => (
   <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -33,7 +34,7 @@ const App: React.FC = () => {
             element={
               <ProtectedRoute requiredRole="member">
                 <Routes>
-                  <Route path="dashboard" element={<div>Member Dashboard</div>} />
+                  <Route path="dashboard" element={<MemberDashboard />} />
                 </Routes>
               </ProtectedRoute>
             }

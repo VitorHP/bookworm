@@ -1,5 +1,7 @@
 export type UserRole = 'member' | 'librarian';
 
+export type BorrowingStatus = 'active' | 'overdue' | 'returned';
+
 export interface User {
   id: number;
   name: string;
@@ -28,8 +30,8 @@ export interface Borrowing {
   returned_at: string | null;
   created_at: string;
   updated_at: string;
-  book?: Book;
-  member?: User;
+  book: Book;
+  member: User;
   librarian?: User;
 }
 
@@ -47,4 +49,8 @@ export interface BookSearchParams {
   author?: string;
   title?: string;
   genre?: string;
+}
+
+export interface BorrowingSearchParams {
+  status?: BorrowingStatus[];
 }

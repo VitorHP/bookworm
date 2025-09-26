@@ -5,8 +5,12 @@ module Api
 
       def index
         authorize Borrowing
-        borrowings = policy_scope(Borrowing)
-        render json: borrowings
+        borrowings = policy_scope(Borrowing).includes(:book)
+
+        borrowings = borrowings.overdue if (params[:status] || []).include?("overdue")
+        borrowings = borrowings.active if (params[:status] || []).include?("active")
+
+        render json: borrowings, include: [ :book ]
       end
 
       def show

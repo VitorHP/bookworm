@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { Book, Borrowing, BookSearchParams } from '@/types/api';
+import { Book, Borrowing, BookSearchParams, BorrowingSearchParams } from '@/types/api';
 import { getStoredToken, clearAuthData } from './auth';
 
 const api = axios.create({
@@ -55,6 +55,9 @@ export const booksApi = {
 export const borrowingsApi = {
   list: (): Promise<AxiosResponse<Borrowing[]>> =>
     api.get('/borrowings'),
+
+  search: (params: BorrowingSearchParams): Promise<AxiosResponse<Borrowing[]>> =>
+    api.get('/borrowings', { params }),
 
   get: (id: number): Promise<AxiosResponse<Borrowing>> =>
     api.get(`/borrowings/${id}`),
