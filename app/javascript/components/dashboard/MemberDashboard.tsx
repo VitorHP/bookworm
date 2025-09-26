@@ -1,12 +1,12 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { borrowingsApi } from '@/utils/api';
-import { formatDate } from '@/utils/formatters';
+import { BorrowingCard } from './BorrowingCard';
 
 const MemberDashboard: React.FC = () => {
   const { data: borrowings, isLoading, error } = useQuery(
     ['borrowings'],
-    () => borrowingsApi.search({ status: ['active', 'overdue'] })
+    () => borrowingsApi.search({ status: [] })
   );
 
   if (isLoading) {
@@ -42,67 +42,13 @@ const MemberDashboard: React.FC = () => {
     );
   }
 
-  const borrowingStatus = (dueDate: string) => {
-    const now = new Date();
-    const due = new Date(dueDate);
-    return due < now ? 'overdue' : 'active';
-  }
-
   return (
-    <div>
+    <div className="space-y-6">
       <h2 className="text-xl font-semibold mb-6">My Borrowings</h2>
-      <div className="bg-white shadow-sm rounded-lg overflow-hidden">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Book
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Borrowed Date
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Due Date
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Status
-              </th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {borrowings.data.map((borrowing) => (
-              <tr key={borrowing.id} className={borrowing.status === 'overdue' ? 'bg-red-50' : undefined}>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div>
-                    <div className="text-sm font-medium text-gray-900">
-                      {borrowing.book.title}
-                    </div>
-                    <div className="text-sm text-gray-500">
-                      {borrowing.book.author}
-                    </div>
-                  </div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {formatDate(borrowing.created_at)}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {formatDate(borrowing.due_date)}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <span
-                    className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${
-                      borrowingStatus(borrowing.due_date) === 'overdue'
-                        ? 'bg-red-100 text-red-800'
-                        : 'bg-green-100 text-green-800'
-                    }`}
-                  >
-                    {borrowingStatus(borrowing.due_date) === 'overdue' ? 'Overdue' : 'Active'}
-                  </span>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {borrowings.data.map((borrowing) => (
+          <BorrowingCard key={borrowing.id} borrowing={borrowing} />
+        ))}
       </div>
     </div>
   );
