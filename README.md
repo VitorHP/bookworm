@@ -1,3 +1,16 @@
+# TODO
+
+- ReturnBookService
+- ApiWrapper
+- Provider
+- MemberDashboard
+- LibrarianDashboard
+- MemCrud
+- LibrarianCrud
+- JSApiImprovements
+  - Retry
+  - ErrorHandling
+
 # README
 
 This README would normally document whatever steps are necessary to get the

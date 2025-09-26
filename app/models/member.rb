@@ -5,6 +5,17 @@ class Member < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :trackable
 
+  has_many :borrowings, dependent: :restrict_with_error
+  has_many :borrowed_books, through: :borrowings, source: :book
+
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true
+
+  def current_borrowings
+    borrowings.active
+  end
+
+  def overdue_borrowings
+    borrowings.overdue
+  end
 end

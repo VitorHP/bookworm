@@ -3,7 +3,7 @@ FactoryBot.define do
     title { Faker::Book.title }
     author { Faker::Book.author }
     genre { Faker::Book.genre }
-    isbn { 
+    isbn {
       # Generate ISBN-13
       prefix = %w[978 979].sample
       group = rand(0..9).to_s
@@ -12,7 +12,7 @@ FactoryBot.define do
       check_digit = rand(0..9).to_s
       "#{prefix}-#{group}-#{publisher}-#{title_num}-#{check_digit}"
     }
-    total_copies { rand(1..10) }
+    total_copies { 10 }
 
     trait :without_title do
       title { nil }

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_25_171943) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_26_024416) do
   create_table "books", force: :cascade do |t|
     t.string "title", null: false
     t.string "author", null: false
@@ -22,6 +22,21 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_25_171943) do
     t.index ["author"], name: "index_books_on_author"
     t.index ["isbn"], name: "index_books_on_isbn", unique: true
     t.index ["title"], name: "index_books_on_title"
+  end
+
+  create_table "borrowings", force: :cascade do |t|
+    t.integer "book_id", null: false
+    t.integer "member_id", null: false
+    t.integer "librarian_id"
+    t.datetime "due_date", null: false
+    t.datetime "returned_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id", "returned_at"], name: "index_borrowings_on_book_id_and_returned_at"
+    t.index ["book_id"], name: "index_borrowings_on_book_id"
+    t.index ["librarian_id"], name: "index_borrowings_on_librarian_id"
+    t.index ["member_id", "returned_at"], name: "index_borrowings_on_member_id_and_returned_at"
+    t.index ["member_id"], name: "index_borrowings_on_member_id"
   end
 
   create_table "librarians", force: :cascade do |t|
@@ -60,4 +75,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_25_171943) do
     t.index ["email"], name: "index_members_on_email", unique: true
     t.index ["reset_password_token"], name: "index_members_on_reset_password_token", unique: true
   end
+
+  add_foreign_key "borrowings", "books"
+  add_foreign_key "borrowings", "librarians"
+  add_foreign_key "borrowings", "members"
 end

@@ -6,11 +6,11 @@ class BookPolicy < ApplicationPolicy
   end
 
   def index?
-    user&.is_a?(Member) || user&.is_a?(Librarian)
+    user.present?
   end
 
   def show?
-    user&.is_a?(Member) || user&.is_a?(Librarian)
+    user.present?
   end
 
   def create?

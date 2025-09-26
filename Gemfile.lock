@@ -383,6 +383,7 @@ GEM
     thruster (0.1.15-arm64-darwin)
     thruster (0.1.15-x86_64-darwin)
     thruster (0.1.15-x86_64-linux)
+    timecop (0.9.10)
     timeout (0.4.3)
     tsort (0.2.0)
     turbo-rails (2.0.16)
@@ -449,6 +450,7 @@ DEPENDENCIES
   stimulus-rails
   tailwindcss-rails
   thruster
+  timecop
   turbo-rails
   tzinfo-data
   web-console

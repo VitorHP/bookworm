@@ -131,7 +131,7 @@ RSpec.describe Api::V1::BooksController, type: :request do
       end
 
       it 'returns an unauthorized message' do
-        expect(json['error']).to eq('Unauthorized')
+        expect(json['errors']).to include('Unauthorized')
       end
     end
 
@@ -188,7 +188,7 @@ RSpec.describe Api::V1::BooksController, type: :request do
       end
 
       it 'returns an unauthorized message' do
-        expect(json['error']).to eq('Unauthorized')
+        expect(json['errors']).to include('Unauthorized')
       end
     end
 
@@ -239,7 +239,7 @@ RSpec.describe Api::V1::BooksController, type: :request do
       end
 
       it 'returns an unauthorized message' do
-        expect(json['error']).to eq('Unauthorized')
+        expect(json['errors']).to include('Unauthorized')
       end
     end
 

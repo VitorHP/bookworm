@@ -10,17 +10,17 @@ class ApiController < ActionController::Base
 
   # Return 500 errors as JSON
   rescue_from StandardError do |e|
-    render json: { error: e.message }, status: :internal_server_error
+    render json: { errors: [ e.message ] }, status: :internal_server_error
   end
 
   # Return 403 errors as JSON
   rescue_from Pundit::NotAuthorizedError do |e|
-    render json: { error: "Unauthorized" }, status: :forbidden
+    render json: { errors: [ "Unauthorized" ] }, status: :forbidden
   end
 
   # Return 404 errors as JSON
   rescue_from ActiveRecord::RecordNotFound do |e|
-    render json: { error: e.message }, status: :not_found
+    render json: { errors: [ e.message ] }, status: :not_found
   end
 
   # Return 422 errors as JSON
