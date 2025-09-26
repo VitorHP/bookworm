@@ -2,6 +2,7 @@ export type UserRole = 'member' | 'librarian';
 
 export interface User {
   id: number;
+  name: string;
   email: string;
   role: UserRole
   token?: string;
