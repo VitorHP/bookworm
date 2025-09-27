@@ -2,14 +2,11 @@
 
 ## To Do
 
-- Only display available books to members
-- Remove JWT from local storage and use cookies instead
-
 I built this with the help of Github Copilot. It woudn't be possible to complete it in a timely manner this week without it. I previously asked the recruiter if using it was OK and she told it was. I Hope that's fine. I'll try to summarize the things I needed to change from the generated code.
 
 ### Backend
 
-Architecture wise I asked it to generate some service classes for some of the endpoints like book borrowing and returning which is what I usually do when developing. Authentication was just standard Devise at first, so I changed it to JWT.
+Architecture wise I asked it to generate some service classes for some of the endpoints like book borrowing and returning which is what I usually do when developing. Authentication was just standard Devise at first, so I changed it to JWT storing it into httpOnly cookies. I also added Pundit for authorization.
 
 ### Frontend
 
