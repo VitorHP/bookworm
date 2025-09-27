@@ -1,3 +1,5 @@
+require "ostruct"
+
 class ReturnBookService
   def initialize(borrowing:, librarian:)
     @borrowing = borrowing
@@ -27,4 +29,3 @@ class ReturnBookService
     OpenStruct.new(success?: false, borrowing: nil, error: error)
   end
 end
-

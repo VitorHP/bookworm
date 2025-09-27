@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLibrarianDashboard } from '@/contexts/LibrarianDashboardContext';
 import { BorrowingCard } from './BorrowingCard';
+import { ReturnButton } from './ReturnButton';
 import type { BorrowingStatus } from '@/types/api';
 
 const LibrarianDashboard: React.FC = () => {
@@ -51,7 +52,11 @@ const LibrarianDashboard: React.FC = () => {
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {borrowings.map((borrowing) => (
-          <BorrowingCard key={borrowing.id} borrowing={borrowing} />
+          <BorrowingCard
+            key={borrowing.id}
+            borrowing={borrowing}
+            actions={!borrowing.returned_at && <ReturnButton borrowing={borrowing} />}
+          />
         ))}
       </div>
 

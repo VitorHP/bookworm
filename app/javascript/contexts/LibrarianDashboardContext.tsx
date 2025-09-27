@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { BorrowingStatus } from '@/types/api';
 import { LibrarianDashboardData } from '@/types/dashboard';
 import { borrowingsApi } from '@/utils/api';
@@ -9,6 +9,8 @@ const LibrarianDashboardContext = createContext<LibrarianDashboardData | undefin
 export const LibrarianDashboardProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [selectedStatuses, setSelectedStatuses] = useState<BorrowingStatus[]>(['active']);
 
+  const queryClient = useQueryClient();
+  
   const { data, isLoading, error } = useQuery({
     queryKey: ['borrowings', 'librarian', selectedStatuses],
     queryFn: async () => {
@@ -17,6 +19,17 @@ export const LibrarianDashboardProvider: React.FC<{ children: React.ReactNode }>
     },
     refetchInterval: 5 * 60 * 1000, // Refetch every 5 minutes
   });
+
+  const { mutateAsync, isLoading: isReturning } = useMutation({
+    mutationFn: (borrowingId: number) => borrowingsApi.return(borrowingId),
+    onSuccess: () => {
+      queryClient.invalidateQueries(['borrowings']);
+    },
+  });
+
+  const returnBook = async (borrowingId: number): Promise<void> => {
+    await mutateAsync(borrowingId);
+  };
 
   const toggleStatus = (status: BorrowingStatus) => {
     setSelectedStatuses(prev =>
@@ -33,6 +46,8 @@ export const LibrarianDashboardProvider: React.FC<{ children: React.ReactNode }>
     isLoading,
     error: error as Error | null,
     toggleStatus,
+    returnBook,
+    isReturning,
   };
 
   return (

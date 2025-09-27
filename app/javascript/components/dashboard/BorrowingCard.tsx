@@ -5,6 +5,7 @@ import type { Borrowing } from '@/types/api';
 
 interface BorrowingCardProps {
   borrowing: Borrowing;
+  actions?: React.ReactNode;
 }
 
 const borrowingStatus = (dueDate: string) => {
@@ -13,7 +14,7 @@ const borrowingStatus = (dueDate: string) => {
   return due < now ? 'overdue' : 'active';
 };
 
-export const BorrowingCard: React.FC<BorrowingCardProps> = ({ borrowing }) => {
+export const BorrowingCard: React.FC<BorrowingCardProps> = ({ borrowing, actions }) => {
   const status = borrowingStatus(borrowing.due_date);
 
   return (
@@ -53,13 +54,14 @@ export const BorrowingCard: React.FC<BorrowingCardProps> = ({ borrowing }) => {
         </dl>
 
 
-        <div className="mt-4">
+        <div className="mt-4 space-y-2">
           <a
             href={`/books/${borrowing.book.id}`}
             className="inline-flex items-center px-3 py-1.5 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
             View Book Details
           </a>
+          {actions && <div className="flex justify-end">{actions}</div>}
         </div>
       </div>
     </div>
