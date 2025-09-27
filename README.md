@@ -2,6 +2,8 @@
 
 I built this with the help of Github Copilot. It woudn't be possible to complete it in a timely manner this week without it. I previously asked the recruiter if using it was OK and she told it was. I Hope that's fine. I'll try to summarize the things I needed to change from the generated code.
 
+Coincidentally, I did another project related to books a few weeks ago to learn Hotwire. It's a project where people can search for books and add links to content related to the books like youtube videos, podcasts and etc. It's in [this repo](https://github.com/VitorHP/inklinks) if you want to have a look.
+
 ### Backend
 
 Architecture wise I asked it to generate some service classes for some of the endpoints like book borrowing and returning which is what I usually do when developing. Authentication was just standard Devise at first, so I changed it to JWT storing it into httpOnly cookies. I also added Pundit for authorization.
