@@ -1,5 +1,5 @@
 class Book < ApplicationRecord
-  has_many :borrowings, dependent: :restrict_with_error
+  has_many :borrowings, dependent: :destroy
   has_many :members, through: :borrowings
 
   validates :title, presence: true
