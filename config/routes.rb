@@ -17,6 +17,10 @@ Rails.application.routes.draw do
           post :return
         end
       end
+
+      namespace :librarian do
+        resources :stats, only: [:index]
+      end
     end
   end
 

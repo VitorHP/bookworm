@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { Book, Borrowing, BookSearchParams, BorrowingSearchParams } from '@/types/api';
+import { LibraryStats } from '@/types/api';
 import { getStoredToken, clearAuthData } from './auth';
 
 const api = axios.create({
@@ -67,6 +68,12 @@ export const borrowingsApi = {
 
   return: (id: number): Promise<AxiosResponse<Borrowing>> =>
     api.post(`/borrowings/${id}/return`),
+};
+
+// Librarian API
+export const librarianApi = {
+  getStats: (): Promise<AxiosResponse<LibraryStats>> =>
+    api.get('/librarian/stats'),
 };
 
 export default api;

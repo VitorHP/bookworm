@@ -35,6 +35,12 @@ export interface Borrowing {
   librarian?: User;
 }
 
+export interface LibraryStats {
+  total_books: number;
+  active_borrowings: number;
+  overdue_borrowings: number;
+}
+
 export interface LoginCredentials {
   email: string;
   password: string;

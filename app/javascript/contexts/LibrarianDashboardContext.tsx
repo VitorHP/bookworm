@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { BorrowingStatus } from '@/types/api';
+import { BorrowingStatus, LibraryStats } from '@/types/api';
 import { LibrarianDashboardData } from '@/types/dashboard';
-import { borrowingsApi } from '@/utils/api';
+import { borrowingsApi, librarianApi } from '@/utils/api';
 
 const LibrarianDashboardContext = createContext<LibrarianDashboardData | undefined>(undefined);
 
@@ -10,20 +10,30 @@ export const LibrarianDashboardProvider: React.FC<{ children: React.ReactNode }>
   const [selectedStatuses, setSelectedStatuses] = useState<BorrowingStatus[]>(['active']);
 
   const queryClient = useQueryClient();
-  
-  const { data, isLoading, error } = useQuery({
+
+  const { data: borrowingsData, isLoading: isLoadingBorrowings, error: borrowingsError } = useQuery({
     queryKey: ['borrowings', 'librarian', selectedStatuses],
     queryFn: async () => {
       const response = await borrowingsApi.search({ status: selectedStatuses });
-      return response;
+      return response.data;
     },
     refetchInterval: 5 * 60 * 1000, // Refetch every 5 minutes
+  });
+
+  const { data: statsData, isLoading: isLoadingStats } = useQuery({
+    queryKey: ['librarian', 'stats'],
+    queryFn: async () => {
+      const response = await librarianApi.getStats();
+      return response.data;
+    },
+    refetchInterval: 5 * 60 * 1000,
   });
 
   const { mutateAsync, isLoading: isReturning } = useMutation({
     mutationFn: (borrowingId: number) => borrowingsApi.return(borrowingId),
     onSuccess: () => {
       queryClient.invalidateQueries(['borrowings']);
+      queryClient.invalidateQueries(['librarian', 'stats']);
     },
   });
 
@@ -39,12 +49,18 @@ export const LibrarianDashboardProvider: React.FC<{ children: React.ReactNode }>
     );
   };
 
+  const isLoading = isLoadingBorrowings || isLoadingStats;
+
   const value: LibrarianDashboardData = {
-    totalBooks: 0,
-    borrowings: data?.data ?? [],
+    stats: statsData ?? {
+      total_books: 0,
+      active_borrowings: 0,
+      overdue_borrowings: 0
+    },
+    borrowings: borrowingsData ?? [],
     selectedStatuses,
     isLoading,
-    error: error as Error | null,
+    error: borrowingsError as Error | null,
     toggleStatus,
     returnBook,
     isReturning,

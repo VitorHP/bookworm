@@ -1,7 +1,7 @@
-import { BorrowingStatus, Borrowing } from "./api";
+import { BorrowingStatus, Borrowing, LibraryStats } from "./api";
 
 export interface LibrarianDashboardData {
-  totalBooks: number;
+  stats: LibraryStats;
   borrowings: Borrowing[];
   selectedStatuses: BorrowingStatus[];
   isLoading: boolean;

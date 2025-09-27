@@ -2,10 +2,11 @@ import React from 'react';
 import { useLibrarianDashboard } from '@/contexts/LibrarianDashboardContext';
 import { BorrowingCard } from './BorrowingCard';
 import { ReturnButton } from './ReturnButton';
-import type { BorrowingStatus } from '@/types/api';
+import { BorrowingStatus } from '@/types/api';
+import { LibraryStatsCards } from './LibraryStatsCards';
 
 const LibrarianDashboard: React.FC = () => {
-  const { borrowings, selectedStatuses, isLoading, error, toggleStatus } = useLibrarianDashboard();
+  const { borrowings, selectedStatuses, isLoading, error, toggleStatus, stats } = useLibrarianDashboard();
 
   if (isLoading) {
     return (
@@ -29,6 +30,8 @@ const LibrarianDashboard: React.FC = () => {
 
   return (
     <div className="space-y-6">
+      <LibraryStatsCards stats={stats} loading={isLoading} />
+
       <div className="sm:flex sm:items-center sm:justify-between">
         <h2 className="text-xl font-semibold">Borrowings</h2>
 
@@ -38,10 +41,9 @@ const LibrarianDashboard: React.FC = () => {
               key={status}
               onClick={() => toggleStatus(status)}
               className={`inline-flex items-center px-3 py-1.5 rounded-md text-sm font-medium capitalize
-                ${
-                  selectedStatuses.includes(status)
-                    ? 'bg-indigo-100 text-indigo-700'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                ${selectedStatuses.includes(status)
+                  ? 'bg-indigo-100 text-indigo-700'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
             >
               {status.replace('_', ' ')}
