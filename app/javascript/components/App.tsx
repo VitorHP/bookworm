@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { MemberDashboardProvider } from '@/contexts/MemberDashboardContext';
 import { LibrarianDashboardProvider } from '@/contexts/LibrarianDashboardContext';
+import { BooksProvider } from '@/contexts/BooksContext';
 import ProtectedRoute from '@/components/auth/ProtectedRoute';
 import Layout from '@/components/navigation/Layout';
 import Login from '@/components/auth/Login';
@@ -45,6 +46,11 @@ const App: React.FC = () => {
                       </MemberDashboardProvider>
                     }
                   />
+                  <Route path="books" element={
+                    <BooksProvider>
+                      <BooksSearch />
+                    </BooksProvider>
+                  } />
                 </Routes>
               </ProtectedRoute>
             }
@@ -64,6 +70,11 @@ const App: React.FC = () => {
                       </LibrarianDashboardProvider>
                     }
                   />
+                  <Route path="books" element={
+                    <BooksProvider>
+                      <BooksSearch />
+                    </BooksProvider>
+                  } />
                 </Routes>
               </ProtectedRoute>
             }

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDebounce } from '@/hooks/useDebounce';
+import { useBooks } from '@/contexts/BooksContext';
 
 interface SearchParams {
   title?: string;
@@ -7,11 +8,8 @@ interface SearchParams {
   genre?: string;
 }
 
-interface SearchFormProps {
-  onSearch: (params: SearchParams) => void;
-}
-
-const SearchForm: React.FC<SearchFormProps> = ({ onSearch }) => {
+const SearchForm: React.FC = () => {
+  const { setSearchParams } = useBooks();
   const [formData, setFormData] = useState<SearchParams>({
     title: '',
     author: '',
@@ -22,7 +20,7 @@ const SearchForm: React.FC<SearchFormProps> = ({ onSearch }) => {
     const cleanParams = Object.fromEntries(
       Object.entries(params).filter(([_, value]) => value && value.trim())
     );
-    onSearch(cleanParams);
+    setSearchParams(cleanParams);
   }, 300);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {

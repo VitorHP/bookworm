@@ -1,4 +1,5 @@
 import React from 'react';
+import { useAuth } from '@/contexts/AuthContext';
 import { Book } from '@/types/api';
 
 interface BookListProps {
@@ -6,6 +7,7 @@ interface BookListProps {
 }
 
 const BookList: React.FC<BookListProps> = ({ books }) => {
+  const { user } = useAuth();
   if (books.length === 0) {
     return (
       <div className="text-center py-8">
@@ -26,15 +28,25 @@ const BookList: React.FC<BookListProps> = ({ books }) => {
           <div className="text-sm text-gray-500 space-y-1">
             <p>Genre: {book.genre}</p>
             <p>ISBN: {book.isbn}</p>
-            <p className="mt-2">
-              {book.total_copies > 0 ? (
-                <span className="text-green-600">
-                  {book.total_copies} copies available
-                </span>
-              ) : (
-                <span className="text-red-600">Out of stock</span>
-              )}
-            </p>
+                          <div className="mt-2 space-y-2">
+                <p>
+                  {book.total_copies > 0 ? (
+                    <span className="text-green-600">
+                      {book.total_copies} copies available
+                    </span>
+                  ) : (
+                    <span className="text-red-600">Out of stock</span>
+                  )}
+                </p>
+                {user?.role === 'member' && book.total_copies > 0 && (
+                  <button
+                    onClick={() => {/* TODO: Implement borrow functionality */}}
+                    className="w-full inline-flex justify-center items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  >
+                    Borrow Book
+                  </button>
+                )}
+              </div>
           </div>
         </div>
       ))}
