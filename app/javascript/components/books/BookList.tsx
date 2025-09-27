@@ -1,5 +1,6 @@
 import React from 'react';
 import { useAuth } from '@/contexts/AuthContext';
+import { useBorrowings } from '@/contexts/BorrowingsContext';
 import { Book } from '@/types/api';
 
 interface BookListProps {
@@ -8,6 +9,7 @@ interface BookListProps {
 
 const BookList: React.FC<BookListProps> = ({ books }) => {
   const { user } = useAuth();
+  const { borrowBook, isLoading } = useBorrowings();
   if (books.length === 0) {
     return (
       <div className="text-center py-8">
@@ -40,10 +42,18 @@ const BookList: React.FC<BookListProps> = ({ books }) => {
                 </p>
                 {user?.role === 'member' && book.total_copies > 0 && (
                   <button
-                    onClick={() => {/* TODO: Implement borrow functionality */}}
-                    className="w-full inline-flex justify-center items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    onClick={async () => {
+                      try {
+                        await borrowBook(book.id);
+                        window.alert(`Successfully borrowed "${book.title}"`);
+                      } catch (error) {
+                        window.alert(error instanceof Error ? error.message : 'Failed to borrow book');
+                      }
+                    }}
+                    disabled={isLoading}
+                    className="w-full inline-flex justify-center items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    Borrow Book
+                    {isLoading ? 'Borrowing...' : 'Borrow Book'}
                   </button>
                 )}
               </div>

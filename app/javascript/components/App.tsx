@@ -4,6 +4,7 @@ import { AuthProvider } from '@/contexts/AuthContext';
 import { MemberDashboardProvider } from '@/contexts/MemberDashboardContext';
 import { LibrarianDashboardProvider } from '@/contexts/LibrarianDashboardContext';
 import { BooksProvider } from '@/contexts/BooksContext';
+import { BorrowingsProvider } from '@/contexts/BorrowingsContext';
 import ProtectedRoute from '@/components/auth/ProtectedRoute';
 import Layout from '@/components/navigation/Layout';
 import Login from '@/components/auth/Login';
@@ -48,7 +49,9 @@ const App: React.FC = () => {
                   />
                   <Route path="books" element={
                     <BooksProvider>
-                      <BooksSearch />
+                      <BorrowingsProvider>
+                        <BooksSearch />
+                      </BorrowingsProvider>
                     </BooksProvider>
                   } />
                 </Routes>
@@ -72,7 +75,9 @@ const App: React.FC = () => {
                   />
                   <Route path="books" element={
                     <BooksProvider>
-                      <BooksSearch />
+                      <BorrowingsProvider>
+                        <BooksSearch />
+                      </BorrowingsProvider>
                     </BooksProvider>
                   } />
                 </Routes>
