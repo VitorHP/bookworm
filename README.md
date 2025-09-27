@@ -163,7 +163,7 @@ bundle exec rspec spec/path/to/test_file.rb
 - Use `bin/dev` to start the development server with hot reload
 - Frontend code is in `app/javascript`
 - API endpoints are namespaced under `/api/v1`
-- Authentication headers format: `Authorization: Bearer <token>`
+- JWT token is stored in a httpOnly cookie
 
 ## 🚢 Deployment
 
