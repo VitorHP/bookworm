@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import axios from 'axios';
 import { User, LoginCredentials, UserRole } from '@/types/api';
 import { authApi } from '@/utils/auth';
 
@@ -31,17 +32,21 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Try to restore user from localStorage on mount
-    try {
-      const storedUser = localStorage.getItem('bookworm_user');
-      if (storedUser) {
-        setUser(JSON.parse(storedUser));
+    // Try to get the current user session
+    const checkSession = async () => {
+      try {
+        const response = await axios.get('/api/v1/me', { withCredentials: true });
+        if (response.data?.user) {
+          setUser(response.data.user);
+        }
+      } catch (err) {
+        console.error('Failed to restore user session:', err);
+      } finally {
+        setIsLoading(false);
       }
-    } catch (err) {
-      console.error('Failed to restore user session:', err);
-    } finally {
-      setIsLoading(false);
-    }
+    };
+
+    checkSession();
   }, []);
 
   const login = async (credentials: LoginCredentials, role: UserRole) => {

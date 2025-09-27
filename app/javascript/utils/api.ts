@@ -1,22 +1,13 @@
 import axios, { AxiosResponse } from 'axios';
 import { Book, Borrowing, BookSearchParams, BorrowingSearchParams } from '@/types/api';
 import { LibraryStats } from '@/types/api';
-import { getStoredToken, clearAuthData } from './auth';
 
 const api = axios.create({
   baseURL: '/api/v1',
   headers: {
     'Content-Type': 'application/json',
   },
-});
-
-// Request interceptor for adding auth token
-api.interceptors.request.use((config) => {
-  const token = getStoredToken();
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
+  withCredentials: true,
 });
 
 // Response interceptor for handling 401 responses
@@ -24,7 +15,6 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      clearAuthData();
       window.location.href = '/login';
     }
     return Promise.reject(error);

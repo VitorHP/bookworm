@@ -1,5 +1,10 @@
 # 📚 Bookworm Library Management System
 
+## To Do
+
+- Only display available books to members
+- Remove JWT from local storage and use cookies instead
+
 I built this with the help of Github Copilot. It woudn't be possible to complete it in a timely manner this week without it. I previously asked the recruiter if using it was OK and she told it was. I Hope that's fine. I'll try to summarize the things I needed to change from the generated code.
 
 ### Backend
@@ -34,12 +39,14 @@ UI was mostly done by AI with some adjustments for better presentation. I can dr
 ## 🚀 Getting Started
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/yourusername/bookworm.git
    cd bookworm
    ```
 
 2. **Install dependencies**
+
    ```bash
    # Install Ruby dependencies
    bundle install
@@ -49,6 +56,7 @@ UI was mostly done by AI with some adjustments for better presentation. I can dr
    ```
 
 3. **Set up the database**
+
    ```bash
    # Create and migrate the database
    bin/rails db:create db:migrate
@@ -58,6 +66,7 @@ UI was mostly done by AI with some adjustments for better presentation. I can dr
    ```
 
 4. **Start the development server**
+
    ```bash
    # Start both Rails and Vite servers
    bin/dev
@@ -68,29 +77,31 @@ The application will be available at `http://localhost:3000`
 ## 🔑 Test Credentials
 
 ### Librarians
+
 1. Sarah Johnson
-   - Email: sarah.johnson@library.com
+   - Email: <sarah.johnson@library.com>
    - Password: password123
    - Role: Librarian
 
 2. Michael Smith
-   - Email: michael.smith@library.com
+   - Email: <michael.smith@library.com>
    - Password: password123
    - Role: Librarian
 
 3. Emily Brown
-   - Email: emily.brown@library.com
+   - Email: <emily.brown@library.com>
    - Password: password123
    - Role: Librarian
 
 ### Members
+
 1. John Doe
-   - Email: john.doe@example.com
+   - Email: <john.doe@example.com>
    - Password: password123
    - Role: Member
 
 2. Alice Wilson
-   - Email: alice.wilson@example.com
+   - Email: <alice.wilson@example.com>
    - Password: password123
    - Role: Member
 

@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   # API routes
   namespace :api do
     namespace :v1 do
+      get "me", to: "users#index"
       resources :books
       resources :borrowings do
         member do
@@ -19,7 +20,7 @@ Rails.application.routes.draw do
       end
 
       namespace :librarian do
-        resources :stats, only: [:index]
+        resources :stats, only: [ :index ]
       end
     end
   end
@@ -34,10 +35,7 @@ Rails.application.routes.draw do
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
-  # Defines the root path route ("/")
-  root "dashboards#index"
-
-  get '*path', to: 'dashboards#index', constraints: ->(request) do
+  get "*path", to: "dashboards#index", constraints: ->(request) do
     !request.xhr? && request.format.html?
   end
 end

@@ -11,4 +11,11 @@ Devise.setup do |config|
     ]
     jwt.expiration_time = 1.day.to_i
   end
+
+  config.jwt_cookie do |jwt_cookie|
+    jwt_cookie.name = "jwt" # Name of the cookie to store the JWT
+    jwt_cookie.secure = Rails.env.production?
+    jwt_cookie.httponly = true
+    jwt_cookie.same_site = :lax
+  end
 end

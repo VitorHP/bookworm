@@ -4,6 +4,7 @@ class Librarian < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :trackable, :jwt_authenticatable,
+         :jwt_cookie_authenticatable,
          jwt_revocation_strategy: JwtDenylist
 
   has_many :processed_borrowings, class_name: "Borrowing", dependent: :restrict_with_error

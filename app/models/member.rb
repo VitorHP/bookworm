@@ -4,6 +4,7 @@ class Member < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :trackable, :jwt_authenticatable,
+         :jwt_cookie_authenticatable,
          jwt_revocation_strategy: JwtDenylist
 
   has_many :borrowings, dependent: :restrict_with_error

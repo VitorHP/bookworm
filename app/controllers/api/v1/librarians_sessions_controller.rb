@@ -16,8 +16,7 @@ module Api
               email: resource.email,
               name: resource.name,
               role: "librarian"
-            },
-            token: request.env["warden-jwt_auth.token"]
+            }
           }
         }
       end

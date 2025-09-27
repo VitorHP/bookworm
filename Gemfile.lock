@@ -113,6 +113,10 @@ GEM
     devise-jwt (0.12.1)
       devise (~> 4.0)
       warden-jwt_auth (~> 0.10)
+    devise-jwt-cookie2 (0.6.0)
+      devise-jwt (~> 0.10)
+      dry-auto_inject (~> 1.0)
+      dry-configurable (~> 1.0)
     diff-lcs (1.6.2)
     dotenv (3.1.8)
     drb (2.2.3)
@@ -159,7 +163,7 @@ GEM
       actionview (>= 7.0.0)
       activesupport (>= 7.0.0)
     json (2.15.0)
-    jwt (3.1.2)
+    jwt (2.10.2)
       base64
     kamal (2.7.0)
       activesupport (>= 7.0)
@@ -245,6 +249,9 @@ GEM
     raabro (1.4.0)
     racc (1.8.1)
     rack (3.2.1)
+    rack-cors (3.0.0)
+      logger
+      rack (>= 3.0.14)
     rack-proxy (0.7.7)
       rack
     rack-session (2.1.1)
@@ -464,6 +471,7 @@ DEPENDENCIES
   debug
   devise
   devise-jwt
+  devise-jwt-cookie2 (~> 0.6.0)
   factory_bot_rails
   faker
   importmap-rails
@@ -472,6 +480,7 @@ DEPENDENCIES
   propshaft
   puma (>= 5.0)
   pundit
+  rack-cors
   rails (~> 8.0.3)
   rspec-rails
   rubocop-rails-omakase

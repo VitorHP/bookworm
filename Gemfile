@@ -27,6 +27,8 @@ gem "vite_rails"
 # Authentication and Authorization
 gem "devise"
 gem "devise-jwt"
+gem "devise-jwt-cookie2", "~> 0.6.0"
+gem "rack-cors"
 gem "pundit"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
