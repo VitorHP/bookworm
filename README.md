@@ -67,7 +67,21 @@ UI was mostly done by AI with some adjustments for better presentation. I can dr
    ```bash
    # Start both Rails and Vite servers
    bin/dev
+
    ```
+
+5. Setup JWT token
+
+   ````
+   ```bash
+   # generate a secret
+   rails secret
+
+   # Create the credentails file
+   EDITOR="code --wait" rails credentials
+
+   # Add devise_jwt_secret_key: [your generated key] to the file
+   ````
 
 The application will be available at `http://localhost:3000`
 
@@ -76,11 +90,13 @@ The application will be available at `http://localhost:3000`
 ### Librarians
 
 1. Sarah Johnson
+
    - Email: <sarah.johnson@library.com>
    - Password: password123
    - Role: Librarian
 
 2. Michael Smith
+
    - Email: <michael.smith@library.com>
    - Password: password123
    - Role: Librarian
@@ -93,6 +109,7 @@ The application will be available at `http://localhost:3000`
 ### Members
 
 1. John Doe
+
    - Email: <john.doe@example.com>
    - Password: password123
    - Role: Member
@@ -115,16 +132,18 @@ bundle exec rspec spec/path/to/test_file.rb
 ## 📱 Features
 
 - **Authentication**
-  - JWT-based authentication
+
+  - JWT-based authentication (Using httpOnly token)
   - Role-based access control (Librarians and Members)
-  - Secure password reset
 
 - **Book Management**
+
   - Add, edit, and remove books
   - Track available copies
   - Search and filter books
 
 - **Borrowing System**
+
   - Borrow and return books
   - Track due dates
   - Handle overdue books
