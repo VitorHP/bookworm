@@ -9,4 +9,3 @@ class StatsPolicy < ApplicationPolicy
     end
   end
 end
-
