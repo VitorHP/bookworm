@@ -30,33 +30,24 @@ const BookList: React.FC<BookListProps> = ({ books }) => {
           <div className="text-sm text-gray-500 space-y-1">
             <p>Genre: {book.genre}</p>
             <p>ISBN: {book.isbn}</p>
-                          <div className="mt-2 space-y-2">
-                <p>
-                  {book.total_copies > 0 ? (
-                    <span className="text-green-600">
-                      {book.total_copies} copies available
-                    </span>
-                  ) : (
-                    <span className="text-red-600">Out of stock</span>
-                  )}
-                </p>
-                {user?.role === 'member' && book.total_copies > 0 && (
-                  <button
-                    onClick={async () => {
-                      try {
-                        await borrowBook(book.id);
-                        window.alert(`Successfully borrowed "${book.title}"`);
-                      } catch (error) {
-                        window.alert(error instanceof Error ? error.message : 'Failed to borrow book');
-                      }
-                    }}
-                    disabled={isLoading}
-                    className="w-full inline-flex justify-center items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    {isLoading ? 'Borrowing...' : 'Borrow Book'}
-                  </button>
-                )}
-              </div>
+            <div className="mt-2 space-y-2">
+              {user?.role === 'member' && book.total_copies > 0 && (
+                <button
+                  onClick={async () => {
+                    try {
+                      await borrowBook(book.id);
+                      window.alert(`Successfully borrowed "${book.title}"`);
+                    } catch (error) {
+                      window.alert(error instanceof Error ? error.message : 'Failed to borrow book');
+                    }
+                  }}
+                  disabled={isLoading}
+                  className="w-full inline-flex justify-center items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isLoading ? 'Borrowing...' : 'Borrow Book'}
+                </button>
+              )}
+            </div>
           </div>
         </div>
       ))}
