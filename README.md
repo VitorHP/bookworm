@@ -1,12 +1,12 @@
 # TODO
 
-- MemberDashboard
 - LibrarianDashboard
 - CRUD for books
 - UI to Borrow a Book
-- UI to return a Book
 - Remove JWT from localstorage
 - Extract API logic from components into Contexts
+- Different status for returned borrowings
+- Update Readme for the devs
 
 # README
 

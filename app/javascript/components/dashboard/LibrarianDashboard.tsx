@@ -55,6 +55,7 @@ const LibrarianDashboard: React.FC = () => {
           <BorrowingCard
             key={borrowing.id}
             borrowing={borrowing}
+            showMemberInfo
             actions={!borrowing.returned_at && <ReturnButton borrowing={borrowing} />}
           />
         ))}

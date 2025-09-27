@@ -8,7 +8,7 @@ class Borrowing < ApplicationRecord
   scope :active, -> { where(returned_at: nil) }
   scope :overdue, -> { active.where("due_date < ?", Time.current) }
   scope :returned, -> { where.not(returned_at: nil) }
-  scope :due_today, -> { active.where(due_date: Time.current..Time.current.end_of_day) }
+  scope :due_today, -> { active.where(due_date: Time.current.beginning_of_day..Time.current.end_of_day) }
 
   def returned?
     returned_at.present?
