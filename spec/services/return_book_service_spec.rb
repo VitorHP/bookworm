@@ -40,4 +40,3 @@ RSpec.describe ReturnBookService do
     end
   end
 end
-
