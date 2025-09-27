@@ -1,7 +1,5 @@
 # 📚 Bookworm Library Management System
 
-## To Do
-
 I built this with the help of Github Copilot. It woudn't be possible to complete it in a timely manner this week without it. I previously asked the recruiter if using it was OK and she told it was. I Hope that's fine. I'll try to summarize the things I needed to change from the generated code.
 
 ### Backend
